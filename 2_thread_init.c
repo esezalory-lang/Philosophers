@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 15:20:39 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 16:12:05 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	*start_routine(void *philo_p)
 
 int	thread_ramp(t_philo **p_array)
 {
-	int i;
-	int j;
-	int n;
+	int	i;
+	int	j;
+	int	n;
 
 	n = p_array[0]->data->n_philo;
 	i = 0;
@@ -37,8 +37,8 @@ int	thread_ramp(t_philo **p_array)
 	}
 	while (j < n)
 	{
-		pthread_join(p_array[i]->thread_id, NULL);
-		i++;
+		pthread_join(p_array[j]->thread_id, NULL);
+		j++;
 	}
-    return(0);
+	return (0);
 }

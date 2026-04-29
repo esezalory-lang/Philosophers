@@ -5,7 +5,7 @@ SRCS = 0_main.c \
 		2_thread_init.c \
 		3_utils.c \
 		4_libftutils.c \
-		5_end.c
+		5_dismantle.c
 
 OBJS = $(SRCS:.c=.o)
 DEPS = $(SRCS:.c=.d)

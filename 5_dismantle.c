@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   5_end.c                                            :+:      :+:    :+:   */
+/*   5_dismantle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 20:10:28 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 20:27:11 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 20:48:58 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void free_destroy_ramp(t_shared *data, t_philo **array, pthread_mutex_t *forks)
+void dismantling(t_shared *data, t_philo **array, pthread_mutex_t *forks)
 {
     free_philos(array, data->n_philo);
     destroy_mutex(data, forks);
@@ -27,8 +27,8 @@ void	free_philos(t_philo **array, int n)
 	{
 		if (array[i])
         {
-			free(array[i]);
             pthread_mutex_destroy(&array[i]->protect_meal);
+			free(array[i]);
         }
 		i++;
 	}
@@ -46,6 +46,6 @@ void	destroy_mutex(t_shared *data, pthread_mutex_t *forks)
 		i++;
 	}
 	free(forks);
-	pthread_mutex_destroy(&data->stop_flag);
+	pthread_mutex_destroy(&data->alive_flag);
 	pthread_mutex_destroy(&data->print);
 }

@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:23:29 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 20:18:19 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 20:48:58 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_shared
 	long int		start_time;
 	int				eat_cycle;
 	int				is_alive;
-	pthread_mutex_t	stop_flag;
+	pthread_mutex_t	alive_flag;
 	pthread_mutex_t	print;
 }					t_shared;
 
@@ -48,7 +48,7 @@ typedef struct s_philo
 }					t_philo;
 
 // 1. Initialisation
-void				data_init(char **argv, t_shared *data);
+int					data_init(char **argv, t_shared *data);
 int					mutex_init(pthread_mutex_t *forks, int n);
 int					philo_init(t_shared *data, t_philo **p_array,
 						pthread_mutex_t *forks, char **argv);
@@ -68,7 +68,8 @@ void				ft_putstr_fd(char *s, int fd);
 long				ft_atoi(const char *nptr);
 
 // 5. End Functions
-void free_destroy_ramp(t_shared *data, t_philo **array, pthread_mutex_t *forks);
+void				dismantling(t_shared *data, t_philo **array,
+						pthread_mutex_t *forks);
 void				free_philos(t_philo **array, int n);
 void				destroy_mutex(t_shared *data, pthread_mutex_t *forks);
 

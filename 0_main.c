@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:14:38 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 20:13:59 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 20:48:58 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,20 @@ int	main(int argc, char **argv)
 	if (argc < 5 || argc > 6)
 		return (printf("Wrong Number of Arguments\n"), 0);
 	i = 0;
-	data_init(argv, &data);
+	if(data_init(argv, &data))
+		return(printf("Init Failure\n"), 0);
 	p_array = ft_calloc(data.n_philo + 1, sizeof(t_philo *));
 	if (!p_array)
-		return (1);
+		return (0);
 	forks = ft_calloc(data.n_philo + 1, sizeof(pthread_mutex_t));
 	if (!forks)
-		return (free(p_array), 1);
+		return (free(p_array), 0);
 	if (mutex_init(forks, data.n_philo))
-		return (destroy_mutex(&data, forks), free(p_array),
+		return (destroy_forks(&data, forks), free(p_array),
 			printf("Init Failure\n"), 0);
 	if (philo_init(&data, p_array, forks, argv))
-		return (free_destroy_ramp(&data, p_array, forks), 0);
+		return (dismantling(&data, p_array, forks), 0);
 	thread_ramp(p_array);
-	free_destroy_ramp(&data, p_array, forks);
+	dismantling(&data, p_array, forks);
 	return (0);
 }

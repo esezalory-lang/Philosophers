@@ -6,13 +6,13 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:31 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 20:18:36 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 20:35:44 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	data_init(char **argv, t_shared *data)
+int	data_init(char **argv, t_shared *data)
 {
 	ft_bzero(data, sizeof(t_shared));
 	data->n_philo = ft_atoi(argv[1]);
@@ -25,9 +25,10 @@ void	data_init(char **argv, t_shared *data)
 		data->eat_cycle = -1;
 	data->start_time = get_mstime();
 	if(data->start_time == -1)
-		return ;
-	pthread_mutex_init(&data->stop_flag, NULL);
+		return (1);
+	pthread_mutex_init(&data->alive_flag, NULL);
 	pthread_mutex_init(&data->print, NULL);
+	return(0);
 }
 
 int	mutex_init(pthread_mutex_t *forks, int n)
@@ -59,10 +60,8 @@ int	philo_init(t_shared *data, t_philo **p_array, pthread_mutex_t *forks,
 		p_array[i]->philo_id = i;
 		p_array[i]->l_fork = &forks[i];
 		p_array[i]->r_fork = &forks[(i + 1) % data->n_philo];
-		p_array[i]->meal_count = ft_atoi(argv[5]);
-		p_array[i]->timestamp = get_mstime();
-		if (p_array[i]->timestamp == -1)
-			return (1);
+		p_array[i]->meal_count = 0;
+		p_array[i]->timestamp = -1;
 		pthread_mutex_init(&p_array[i]->protect_meal, NULL);
 		i++;
 	}

@@ -4,17 +4,19 @@ SRCS = 0_main.c \
 		1_init.c \
 		2_thread_init.c \
 		3_utils.c \
-		4_libftutils.c
+		4_libftutils.c \
+		5_end.c
 
 OBJS = $(SRCS:.c=.o)
+DEPS = $(SRCS:.c=.d)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -MMD -g
 PFLAG = -pthread
 
 all: $(NAME)
 
-%.o: %.c philosophers.h
+%.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
@@ -22,7 +24,7 @@ $(NAME): $(OBJS)
 	@echo Ready to dine with philosophers
 
 clean:
-	@rm -f $(OBJS)
+	@rm -f $(OBJS) $(DEPS)
 	@echo Almost clean
 
 fclean: clean
@@ -32,3 +34,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+-include $(DEPS)

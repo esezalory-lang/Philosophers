@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:23:29 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 16:06:06 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 16:32:45 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_constant
 	int					ttd;
 	int					tte;
 	int					tts;
+	long int			start_time;
 }						t_const;
 
 typedef struct s_philo
@@ -42,7 +43,7 @@ typedef struct s_philo
 	pthread_t			thread_id;
 	int					philo_id;
 	int					eat_cycle;
-	long				timestamp;
+	long int			timestamp;
 
 }						t_philo;
 
@@ -59,6 +60,7 @@ void					*start_routine(void *philo_p);
 // 3. Utils
 void					free_philos(t_philo **array, int n);
 void					destroy_forks(pthread_mutex_t *forks, int n);
+long int				get_mstime(void);
 
 // 4. Libft Utils
 int						ft_strlen(char *str);

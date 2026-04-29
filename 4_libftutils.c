@@ -6,20 +6,20 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 10:55:19 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 15:22:02 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 16:23:41 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 		i++;
-	return(i);
+	return (i);
 }
 
 void	ft_bzero(void *s, size_t n)

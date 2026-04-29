@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:31 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 16:11:57 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 16:33:11 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int	mutex_init(pthread_mutex_t *forks, int n)
 int	philo_init(t_const *data, t_philo **p_array, pthread_mutex_t *forks,
 		char **argv)
 {
-	int				i;
-	struct timeval	current;
+	int	i;
 
 	i = 0;
 	while (i < data->n_philo)
@@ -53,7 +52,9 @@ int	philo_init(t_const *data, t_philo **p_array, pthread_mutex_t *forks,
 		p_array[i]->r_fork = &forks[(i + 1) % data->n_philo];
 		if (argv[5])
 			p_array[i]->eat_cycle = ft_atoi(argv[5]);
-		p_array[i]->timestamp = gettimeofday(&current, NULL);
+		else
+			p_array[i]->eat_cycle = -1;
+		p_array[i]->timestamp = get_mstime();
 		if (p_array[i]->timestamp == -1)
 			return (1);
 		i++;

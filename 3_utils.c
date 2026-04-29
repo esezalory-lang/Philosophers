@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 10:55:19 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 16:03:56 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 16:31:45 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,24 @@ void	free_philos(t_philo **array, int n)
 
 void	destroy_forks(pthread_mutex_t *forks, int n)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < n)
 	{
-		if (&forks[i])
-			pthread_mutex_destroy(&forks[i]);
+		pthread_mutex_destroy(&forks[i]);
 		i++;
 	}
 	free(forks);
+}
+
+long int	get_mstime(void)
+{
+	long int		ms_time;
+	struct timeval	current;
+
+	if (gettimeofday(&current, NULL) != 0)
+		return (-1);
+	ms_time = (current.tv_sec * 1000) + (current.tv_usec / 1000);
+	return (ms_time);
 }

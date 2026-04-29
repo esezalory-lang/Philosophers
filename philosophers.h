@@ -6,11 +6,11 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:23:29 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 15:04:24 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:22:40 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILISOPHERS_H
+#ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
 # include <limits.h>
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/time.h>
+# include <unistd.h>
 
 typedef struct s_monitor
 {
@@ -52,11 +53,16 @@ int						philo_mutex_alloc(t_philo **p_array,
 int						philo_init(t_philo **p_array, pthread_mutex_t **forks,
 							char *n_eats);
 
+// 2. Thread Init
+int						thread_ramp(t_philo **p_array);
+void					*start_routine(void *philo_p);
+
 // 3. Utils
 void					free_philos(t_philo **array, int n);
 void					destroy_forks(pthread_mutex_t **forks, int n);
 
 // 4. Libft Utils
+int ft_strlen(char *str);
 void					ft_bzero(void *s, size_t n);
 void					*ft_calloc(size_t nmemb, size_t size);
 void					ft_putstr_fd(char *s, int fd);

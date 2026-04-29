@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:31 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 15:03:28 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:20:20 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ int	philo_mutex_alloc(t_philo **p_array, pthread_mutex_t **forks, int n)
 {
 	int	i;
 
+	i = 0;
 	p_array = ft_calloc(n + 1, sizeof(t_philo *));
 	if (!p_array)
 		return (1);
-	forks = ft_calloc(n + 1, sizeof(pthread_mutex_t));
+	forks = ft_calloc(n + 1, sizeof(pthread_mutex_t *));
 	if (!forks)
 		return (free(p_array), 1);
 	while (i < n)

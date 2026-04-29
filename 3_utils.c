@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 10:55:19 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 12:23:06 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:21:16 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	destroy_forks(pthread_mutex_t **forks, int n)
 	while (i < n)
 	{
 		if (forks[i])
-			pthread_mutex_destroy(&forks[i]);
+			pthread_mutex_destroy(forks[i]);
 		i++;
 	}
 	free(forks);

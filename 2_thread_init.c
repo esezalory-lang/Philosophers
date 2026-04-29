@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 15:04:39 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:20:39 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,5 @@ int	thread_ramp(t_philo **p_array)
 		pthread_join(p_array[i]->thread_id, NULL);
 		i++;
 	}
+    return(0);
 }

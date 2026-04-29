@@ -6,11 +6,21 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 10:55:19 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 15:04:30 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:22:02 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int ft_strlen(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+		i++;
+	return(i);
+}
 
 void	ft_bzero(void *s, size_t n)
 {

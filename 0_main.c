@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:14:38 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 21:01:30 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 21:04:46 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	main(int argc, char **argv)
 			printf("Init Failure\n"), 0);
 	if (philo_init(&data, p_array, forks))
 		return (dismantling(&data, p_array, forks), 0);
+	thread_ramp(p_array);
 	dismantling(&data, p_array, forks);
 	return (0);
 }

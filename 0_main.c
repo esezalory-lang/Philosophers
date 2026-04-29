@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:14:38 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 21:04:46 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 21:29:50 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,23 @@
 // - number of times it must eat
 // - timestamp
 
+static int main_init(int argc, char **argv, t_shared *data)
+{
+	if(argument_handling(argc, argv))
+		return(printf("Arguments Error\n"), 1);
+	if(data_init(argv, data))
+		return(printf("Init Failure\n"), 1);
+	return(0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_shared		data;
 	t_philo			**p_array;
 	pthread_mutex_t	*forks;
-	int				i;
 
-	if(argument_handling(argc, argv))
-		return(printf("Arguments Error\n"), 0);
-	i = 0;
-	if(data_init(argv, &data))
-		return(printf("Init Failure\n"), 0);
+	if(main_init(argc, argv, &data))
+		return (0);
 	p_array = ft_calloc(data.n_philo + 1, sizeof(t_philo *));
 	if (!p_array)
 		return (0);

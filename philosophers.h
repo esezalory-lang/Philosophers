@@ -6,17 +6,19 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:23:29 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 12:23:06 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:04:24 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILISOPHERS_H
 # define PHILOSOPHERS_H
 
+# include <limits.h>
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <sys/time.h>
 
 typedef struct s_monitor
 {
@@ -39,9 +41,16 @@ typedef struct s_philo
 	pthread_t			thread_id;
 	int					philo_id;
 	int					eat_cycle;
-	int					timestamp;
+	long				timestamp;
 
 }						t_philo;
+
+// 1. Initialisation
+void					data_init(char **argv, t_const *data);
+int						philo_mutex_alloc(t_philo **p_array,
+							pthread_mutex_t **forks, int n);
+int						philo_init(t_philo **p_array, pthread_mutex_t **forks,
+							char *n_eats);
 
 // 3. Utils
 void					free_philos(t_philo **array, int n);
@@ -51,5 +60,6 @@ void					destroy_forks(pthread_mutex_t **forks, int n);
 void					ft_bzero(void *s, size_t n);
 void					*ft_calloc(size_t nmemb, size_t size);
 void					ft_putstr_fd(char *s, int fd);
+long					ft_atoi(const char *nptr);
 
 #endif

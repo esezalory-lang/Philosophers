@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 10:55:19 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 11:43:37 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:04:30 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,29 @@ void	*ft_calloc(size_t nmemb, size_t size)
 void	ft_putstr_fd(char *s, int fd)
 {
 	write(fd, s, ft_strlen(s));
+}
+
+long	ft_atoi(const char *nptr)
+{
+	int			i;
+	int			sign;
+	long long	new_nbr;
+
+	i = 0;
+	sign = 1;
+	new_nbr = 0;
+	if (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		new_nbr = (new_nbr * 10) + (nptr[i] - 48);
+		if (new_nbr > INT_MAX || new_nbr < INT_MIN)
+			return (2147483648);
+		i++;
+	}
+	return (new_nbr * sign);
 }

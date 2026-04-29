@@ -1,11 +1,12 @@
 NAME = philo
 
 SRCS = 0_main.c \
-		1_init.c \
-		2_thread_init.c \
-		3_utils.c \
-		4_libftutils.c \
-		5_dismantle.c
+		1_inputs.c\
+		2_init.c \
+		3_thread_init.c \
+		4_dismantle.c \
+		5_utils.c \
+		6_libftutils.c
 
 OBJS = $(SRCS:.c=.o)
 DEPS = $(SRCS:.c=.d)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1_init.c                                           :+:      :+:    :+:   */
+/*   2_init.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:31 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 20:35:44 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/29 21:01:08 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	mutex_init(pthread_mutex_t *forks, int n)
 	return (0);
 }
 
-int	philo_init(t_shared *data, t_philo **p_array, pthread_mutex_t *forks,
-		char **argv)
+int	philo_init(t_shared *data, t_philo **p_array, pthread_mutex_t *forks)
 {
 	int	i;
 

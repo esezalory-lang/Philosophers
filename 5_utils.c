@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 10:55:19 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 18:28:18 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 18:55:21 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,17 @@ int	print_state(t_philo *philo_p, int i)
 			return (1);
 	pthread_mutex_lock(&philo_p->data->print);
 	elapsed_time = get_mstime() - philo_p->data->start_time;
-	if (i == 1)
+	if (i == FORKS)
 		printf("%li %i has taken a fork\n", elapsed_time, philo_p->philo_id);
-	else if (i == 2)
+	else if (i == EATS)
 		printf("%li %i is eating\n", elapsed_time, philo_p->philo_id);
-	else if (i == 3)
+	else if (i == SLEEPS)
 		printf("%li %i is sleeping\n", elapsed_time, philo_p->philo_id);
-	else if (i == 4)
+	else if (i == THINKS)
 		printf("%li %i is thinking\n", elapsed_time, philo_p->philo_id);
-	else if (i == 0)
+	else if (i == DIES)
 		printf("%li %i died\n", elapsed_time, philo_p->philo_id);
-	if (i != 0)
-		pthread_mutex_unlock(&philo_p->data->print);
+	pthread_mutex_unlock(&philo_p->data->print);
 	return(0);
 }
 
@@ -63,6 +62,6 @@ int	set_stop_flag(t_philo *philo)
 	pthread_mutex_lock(&philo->data->stop_flag);
 	philo->data->must_stop = 1;
 	pthread_mutex_unlock(&philo->data->stop_flag);
-	print_state(philo, 0);
+	print_state(philo, DIES);
 	return (1);
 }

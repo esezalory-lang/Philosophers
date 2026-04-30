@@ -6,12 +6,18 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:23:29 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 18:20:34 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 18:52:21 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
+
+# define FORKS 1
+# define EATS 2
+# define SLEEPS 3
+# define THINKS 4
+# define DIES 0
 
 # include <limits.h>
 # include <pthread.h>

@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 18:30:20 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 18:58:57 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	*monitor_routine(void *philo_array)
 				return (NULL);
 			i++;
 		}
+		usleep(1000);
 	}
-	usleep(1000);
 	return (NULL);
 }
 
@@ -46,22 +46,22 @@ void	*philo_routine(void *philo_p)
 	if (philo->data->n_philo == 1)
 	{
 		pthread_mutex_lock(philo->l_fork);
-		if(print_state(philo, 1) == 1)
-			return(NULL);
-		pthread_mutex_unlock(philo->l_fork);
-		usleep(philo->data->ttd + 1);
-	}
+		if (print_state(philo, FORKS) == 1)
+			return (NULL);
+		return (pthread_mutex_unlock(philo->l_fork), usleep(philo->data->ttd
+				+ 1), NULL);
+	} // Seperate function outside of thread
 	if (philo->philo_id % 2 != 0)
 		usleep(100);
 	while (stop_flag_check(philo) != 1)
 	{
 		if (taking_forks(philo) == 1 || mahlzeit(philo) == 1)
 			return (NULL);
-		if(print_state(philo, 3) == 1)
-			return(NULL);
+		if (print_state(philo, SLEEPS) == 1)
+			return (NULL);
 		usleep(philo->data->tts * 1000);
-		if(print_state(philo, 4) == 1)
-			return(NULL);
+		if (print_state(philo, THINKS) == 1)
+			return (NULL);
 	}
 	return (NULL);
 }

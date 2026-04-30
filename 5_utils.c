@@ -6,12 +6,11 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 10:55:19 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 17:47:33 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 18:19:21 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
 
 long int	get_mstime(void)
 {
@@ -24,24 +23,27 @@ long int	get_mstime(void)
 	return (ms_time);
 }
 
-void print_state(t_philo *philo_p, int i)
+int	print_state(t_philo *philo_p, int i)
 {
-	long int 	elapsed_time;
+	long int	elapsed_time;
 
+	if (stop_flag_check(philo_p) == 1)
+			return (1);
 	pthread_mutex_lock(&philo_p->data->print);
 	elapsed_time = get_mstime() - philo_p->data->start_time;
-	if(i == 1)
+	if (i == 1)
 		printf("%li %i has taken a fork\n", elapsed_time, philo_p->philo_id);
-	else if(i == 2)
+	else if (i == 2)
 		printf("%li %i is eating\n", elapsed_time, philo_p->philo_id);
-	else if(i == 3)
+	else if (i == 3)
 		printf("%li %i is sleeping\n", elapsed_time, philo_p->philo_id);
-	else if(i == 4)
+	else if (i == 4)
 		printf("%li %i is thinking\n", elapsed_time, philo_p->philo_id);
-	else if(i == 0)
+	else if (i == 0)
 		printf("%li %i died\n", elapsed_time, philo_p->philo_id);
-	if(i != 0)
+	if (i != 0)
 		pthread_mutex_unlock(&philo_p->data->print);
+	return(0);
 }
 
 int	stop_flag_check(t_philo *philo_p)
@@ -56,14 +58,11 @@ int	stop_flag_check(t_philo *philo_p)
 	return (0);
 }
 
-int set_stop_flag(t_philo *philo)
+int	set_stop_flag(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->stop_flag);
 	philo->data->must_stop = 1;
 	pthread_mutex_unlock(&philo->data->stop_flag);
-	if (stop_flag_check(philo) == 1)
-		return (1);
 	print_state(philo, 0);
 	return (1);
 }
-

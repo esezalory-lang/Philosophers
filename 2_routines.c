@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 17:49:39 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 18:22:30 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,23 @@ void	*monitor_routine(void *philo_array)
 	t_philo		**p_array;
 	t_shared	*data;
 	int			i;
+	int			full_philos;
 
 	p_array = (t_philo **)philo_array;
 	data = p_array[0]->data;
 	while (1)
 	{
 		i = 0;
+		full_philos = 0;
 		while (i < data->n_philo)
 		{
-			if(dead_or_full(p_array[i]) == 1)
-				return(NULL);
+			if (dead_or_full(p_array[i], &full_philos) == 1)
+				return (NULL);
 			i++;
 		}
 	}
-	return(NULL);
+	usleep(1000);
+	return (NULL);
 }
 
 void	*philo_routine(void *philo_p)
@@ -40,21 +43,24 @@ void	*philo_routine(void *philo_p)
 	philo = (t_philo *)philo_p;
 	if (stop_flag_check(philo) == 1)
 		return (NULL);
+	if (philo->data->n_philo == 1)
+	{
+		pthread_mutex_lock(philo->l_fork);
+		if(print_state(philo, 1) == 1)
+			return(NULL);
+		pthread_mutex_lock(philo->l_fork);
+	}
 	if (philo->philo_id % 2 != 0)
 		usleep(100);
 	while (stop_flag_check(philo) != 1)
 	{
-		if (taking_forks(philo) == 1)
+		if (taking_forks(philo) == 1 || mahlzeit(philo) == 1)
 			return (NULL);
-		if (mahlzeit(philo) == 1)
-			return (NULL);
-		if (stop_flag_check(philo) == 1)
-			return (NULL);
-		print_state(philo, 3);
+		if(print_state(philo, 3) == 1)
+			return(NULL);
 		usleep(philo->data->tts * 1000);
-		if (stop_flag_check(philo) == 1)
-			return (NULL);
-		print_state(philo, 4);
+		if(print_state(philo, 4) == 1)
+			return(NULL);
 	}
 	return (NULL);
 }

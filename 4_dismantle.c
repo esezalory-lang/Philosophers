@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   3_dismantle.c                                      :+:      :+:    :+:   */
+/*   4_dismantle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 20:10:28 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 16:50:16 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:55:55 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void dismantling(t_shared *data, t_philo **array, pthread_mutex_t *forks)
+void	dismantling(t_shared *data, t_philo **array, pthread_mutex_t *forks)
 {
-    free_philos(array, data->n_philo);
-    destroy_mutex(data, forks);
+	free_philos(array, data->n_philo);
+	destroy_mutex(data, forks);
 }
 
 void	free_philos(t_philo **array, int n)
@@ -26,10 +26,10 @@ void	free_philos(t_philo **array, int n)
 	while (i < n)
 	{
 		if (array[i])
-        {
-            pthread_mutex_destroy(&array[i]->protect_meal);
+		{
+			pthread_mutex_destroy(&array[i]->protect_meal);
 			free(array[i]);
-        }
+		}
 		i++;
 	}
 	free(array);
@@ -50,15 +50,15 @@ void	destroy_mutex(t_shared *data, pthread_mutex_t *forks)
 	pthread_mutex_destroy(&data->print);
 }
 
-int born2die(t_philo **p_array, int n)
+int	born2die(t_philo **p_array, int n)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < n)
 	{
 		pthread_join(p_array[i]->thread_id, NULL);
 		i++;
 	}
-	return(0);
+	return (0);
 }

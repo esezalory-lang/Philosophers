@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:31 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 14:59:58 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:55:48 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ int	data_init(char **argv, t_shared *data)
 	data->tte = ft_atoi(argv[3]);
 	data->tts = ft_atoi(argv[4]);
 	data->must_stop = 0;
-	if(argv[5])
+	if (argv[5])
 		data->eat_cycle = ft_atoi(argv[5]);
 	else
 		data->eat_cycle = -1;
 	data->start_time = get_mstime();
-	if(data->start_time == -1)
+	if (data->start_time == -1)
 		return (1);
 	pthread_mutex_init(&data->stop_flag, NULL);
 	pthread_mutex_init(&data->print, NULL);
-	return(0);
+	return (0);
 }
 
 int	mutex_init(pthread_mutex_t *forks, int n)

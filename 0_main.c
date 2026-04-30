@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:14:38 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 17:27:44 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:55:41 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,38 +26,38 @@
 // - number of times it must eat
 // - timestamp
 
-static int argument_handling(int argc, char **argv)
+static int	argument_handling(int argc, char **argv)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = 1;
-    if(argc < 5 || argc > 6)
-        return(1);
-    while(i < argc)
-    {
-        j = 0;
-        while(argv[i][j])
-        {
-            if((argv[i][j] >= 'a' && argv[i][j] <= 'z') || (argv[i][j] >= 'A' && argv[i][j] <= 'Z'))
-                return(1);
-            j++;
-        }
-        
-        if(ft_atoi(argv[i]) <= 0)
-            return(1);
-        i++;
-    }
-    return(0);
+	i = 1;
+	if (argc < 5 || argc > 6)
+		return (1);
+	while (i < argc)
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			if ((argv[i][j] >= 'a' && argv[i][j] <= 'z') || (argv[i][j] >= 'A'
+					&& argv[i][j] <= 'Z'))
+				return (1);
+			j++;
+		}
+		if (ft_atoi(argv[i]) <= 0)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-static int main_init(int argc, char **argv, t_shared *data)
+static int	main_init(int argc, char **argv, t_shared *data)
 {
-	if(argument_handling(argc, argv))
-		return(printf("Arguments Error\n"), 1);
-	if(data_init(argv, data))
-		return(printf("Init Failure\n"), 1);
-	return(0);
+	if (argument_handling(argc, argv))
+		return (printf("Arguments Error\n"), 1);
+	if (data_init(argv, data))
+		return (printf("Init Failure\n"), 1);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -66,7 +66,7 @@ int	main(int argc, char **argv)
 	t_philo			**p_array;
 	pthread_mutex_t	*forks;
 
-	if(main_init(argc, argv, &data))
+	if (main_init(argc, argv, &data))
 		return (0);
 	p_array = ft_calloc(data.n_philo + 1, sizeof(t_philo *));
 	if (!p_array)

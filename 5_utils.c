@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   3_utils.c                                          :+:      :+:    :+:   */
+/*   5_utils.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 10:55:19 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 20:10:54 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:18:37 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,3 +23,36 @@ long int	get_mstime(void)
 	ms_time = (current.tv_sec * 1000) + (current.tv_usec / 1000);
 	return (ms_time);
 }
+
+void print_state(t_philo *philo_p, int i)
+{
+	long int 	elapsed_time;
+
+	pthread_mutex_lock(&philo_p->data->print);
+	elapsed_time = get_mstime() - philo_p->data->start_time;
+	if(i == 1)
+		printf("%li %i has taken a fork\n", elapsed_time, philo_p->philo_id);
+	else if(i == 2)
+		printf("%li %i is eating\n", elapsed_time, philo_p->philo_id);
+	else if(i == 3)
+		printf("%li %i is sleeping\n", elapsed_time, philo_p->philo_id);
+	else if(i == 4)
+		printf("%li %i is thinking\n", elapsed_time, philo_p->philo_id);
+	else if(i == 0)
+		printf("%li %i died\n", elapsed_time, philo_p->philo_id);
+	if(i != 0)
+		pthread_mutex_unlock(&philo_p->data->print);
+}
+
+int	stop_flag_check(t_philo *philo_p)
+{
+	pthread_mutex_lock(&philo_p->data->stop_flag);
+	if (philo_p->data->must_stop == 1)
+	{
+		pthread_mutex_unlock(&philo_p->data->stop_flag);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo_p->data->stop_flag);
+	return (0);
+}
+

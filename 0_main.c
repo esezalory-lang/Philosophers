@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:14:38 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 21:29:50 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:27:44 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,31 @@
 // - philo_id
 // - number of times it must eat
 // - timestamp
+
+static int argument_handling(int argc, char **argv)
+{
+    int i;
+    int j;
+
+    i = 1;
+    if(argc < 5 || argc > 6)
+        return(1);
+    while(i < argc)
+    {
+        j = 0;
+        while(argv[i][j])
+        {
+            if((argv[i][j] >= 'a' && argv[i][j] <= 'z') || (argv[i][j] >= 'A' && argv[i][j] <= 'Z'))
+                return(1);
+            j++;
+        }
+        
+        if(ft_atoi(argv[i]) <= 0)
+            return(1);
+        i++;
+    }
+    return(0);
+}
 
 static int main_init(int argc, char **argv, t_shared *data)
 {
@@ -54,7 +79,7 @@ int	main(int argc, char **argv)
 			printf("Init Failure\n"), 0);
 	if (philo_init(&data, p_array, forks))
 		return (dismantling(&data, p_array, forks), 0);
-	thread_ramp(p_array);
+	routines(p_array);
 	dismantling(&data, p_array, forks);
 	return (0);
 }

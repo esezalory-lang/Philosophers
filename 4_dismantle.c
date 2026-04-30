@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   5_dismantle.c                                      :+:      :+:    :+:   */
+/*   3_dismantle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 20:10:28 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/29 20:48:58 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 16:50:16 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,19 @@ void	destroy_mutex(t_shared *data, pthread_mutex_t *forks)
 		i++;
 	}
 	free(forks);
-	pthread_mutex_destroy(&data->alive_flag);
+	pthread_mutex_destroy(&data->stop_flag);
 	pthread_mutex_destroy(&data->print);
+}
+
+int born2die(t_philo **p_array, int n)
+{
+	int i;
+	
+	i = 0;
+	while (i < n)
+	{
+		pthread_join(p_array[i]->thread_id, NULL);
+		i++;
+	}
+	return(0);
 }

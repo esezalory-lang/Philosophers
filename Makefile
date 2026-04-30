@@ -1,9 +1,9 @@
 NAME = philo
 
 SRCS = 0_main.c \
-		1_inputs.c\
-		2_init.c \
-		3_thread_init.c \
+		1_init.c \
+		2_routines.c \
+		3_routine_utils.c \
 		4_dismantle.c \
 		5_utils.c \
 		6_libftutils.c

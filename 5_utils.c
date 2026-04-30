@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 10:55:19 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 18:19:21 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 18:28:18 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	print_state(t_philo *philo_p, int i)
 {
 	long int	elapsed_time;
 
-	if (stop_flag_check(philo_p) == 1)
+	if (stop_flag_check(philo_p) == 1 && i != 0)
 			return (1);
 	pthread_mutex_lock(&philo_p->data->print);
 	elapsed_time = get_mstime() - philo_p->data->start_time;

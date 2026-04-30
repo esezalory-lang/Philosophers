@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 18:25:17 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 18:27:30 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ int	mahlzeit(t_philo *philo_p)
 	philo_p->timestamp = get_mstime();
 	philo_p->meal_count += 1;
 	pthread_mutex_unlock(&philo_p->protect_meal);
-	if (stop_flag_check(philo_p) == 1)
-		return (1);
-	print_state(philo_p, 2);
+	if(print_state(philo_p, 2) == 1)
+		return(1);
 	usleep(philo_p->data->tte * 1000);
 	if (stop_flag_check(philo_p) == 1)
 		return (1);

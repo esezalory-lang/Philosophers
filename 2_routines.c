@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 18:22:30 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 18:30:20 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	*philo_routine(void *philo_p)
 		pthread_mutex_lock(philo->l_fork);
 		if(print_state(philo, 1) == 1)
 			return(NULL);
-		pthread_mutex_lock(philo->l_fork);
+		pthread_mutex_unlock(philo->l_fork);
+		usleep(philo->data->ttd + 1);
 	}
 	if (philo->philo_id % 2 != 0)
 		usleep(100);

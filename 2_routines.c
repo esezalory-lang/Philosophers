@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 17:27:30 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:49:39 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	*monitor_routine(void *philo_array)
 	t_philo		**p_array;
 	t_shared	*data;
 	int			i;
-	long int present;
 
 	p_array = (t_philo **)philo_array;
 	data = p_array[0]->data;
@@ -26,13 +25,8 @@ void	*monitor_routine(void *philo_array)
 		i = 0;
 		while (i < data->n_philo)
 		{
-			pthread_mutex_lock(&p_array[i]->protect_meal);
-			present = get_mstime();
-			if((present - p_array[i]->timestamp) > data->ttd || p_array[i]->meal_count == data->eat_cycle)
-			{
-				dead_or_full(p_array[i]);
+			if(dead_or_full(p_array[i]) == 1)
 				return(NULL);
-			}
 			i++;
 		}
 	}

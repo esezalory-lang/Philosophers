@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:23:29 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 17:28:39 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:49:30 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void				*monitor_routine(void *philo_array);
 // 3. Routine Utils
 int					mahlzeit(t_philo *philo_p);
 int					taking_forks(t_philo *philo_p);
-void				*dead_or_full(t_philo *philo);
+int					dead_or_full(t_philo *philo);
 
 // 3. Dismantling Functions
 void				dismantling(t_shared *data, t_philo **array,
@@ -74,6 +74,7 @@ int					born2die(t_philo **p_array, int n);
 long int			get_mstime(void);
 void				print_state(t_philo *philo_p, int i);
 int					stop_flag_check(t_philo *philo_p);
+int					set_stop_flag(t_philo *philo);
 
 // 5. Libft Utils
 int					ft_strlen(char *str);

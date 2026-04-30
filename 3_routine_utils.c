@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 17:28:34 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:49:20 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,22 @@ int	taking_forks(t_philo *philo_p)
 	return (0);
 }
 
-void	*dead_or_full(t_philo *philo)
+int	dead_or_full(t_philo *philo)
 {
-	pthread_mutex_unlock(&philo->protect_meal);
-	pthread_mutex_lock(&philo->data->stop_flag);
-	philo->data->must_stop = 1;
-	pthread_mutex_lock(&philo->data->stop_flag);
-	if (stop_flag_check(philo) == 1)
-		return (NULL);
-	print_state(philo, 0);
-	return (NULL);
+	long int	present;
+
+	pthread_mutex_lock(&philo->protect_meal);
+	present = get_mstime();
+	if ((present - philo->timestamp) > philo->data->ttd)
+	{
+		pthread_mutex_unlock(&philo->protect_meal);
+		return (set_stop_flag(philo));
+	}
+	pthread_mutex_lock(&philo->protect_meal);
+	if (philo->meal_count == philo->data->eat_cycle)
+	{
+		pthread_mutex_unlock(&philo->protect_meal);
+		return (set_stop_flag(philo));
+	}
+	return (0);
 }

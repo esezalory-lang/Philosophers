@@ -6,11 +6,12 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:14:38 by esezalor          #+#    #+#             */
-/*   Updated: 2026/05/01 10:34:33 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/01 15:36:51 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <bits/pthreadtypes.h>
 
 // Shared Constant:
 // - number_of_philosophers
@@ -81,6 +82,7 @@ int	main(int argc, char **argv)
 	t_shared		data;
 	t_philo			**p_array;
 	pthread_mutex_t	*forks;
+	pthread_t		monitor;
 
 	if (main_init(argc, argv, &data))
 		return (0);
@@ -97,7 +99,7 @@ int	main(int argc, char **argv)
 		return (dismantling(&data, p_array, forks), 0);
 	if (just1_philo(&data) == 1)
 		return (dismantling(&data, p_array, forks), 0);
-	routines(p_array);
+	routines(p_array, &monitor, 0);
 	dismantling(&data, p_array, forks);
 	return (0);
 }

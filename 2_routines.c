@@ -6,11 +6,23 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/05/01 10:29:30 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/01 15:35:28 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static void	join_philos(t_philo **p_array, t_shared *data)
+{
+	int	k;
+
+	k = 0;
+	while (k < data->n_philo)
+	{
+		pthread_join(p_array[k]->thread_id, NULL);
+		k++;
+	}
+}
 
 void	*monitor_routine(void *philo_array)
 {
@@ -60,30 +72,43 @@ void	*philo_routine(void *philo_p)
 	return (NULL);
 }
 
-int	routines(t_philo **p_array)
+void	*solo_routine(void *philo_p)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)philo_p;
+	pthread_mutex_lock(philo->l_fork);
+	if (print_state(philo, FORKS) == 1)
+		return (NULL);
+	usleep(philo->data->ttd * 1000);
+	pthread_mutex_unlock(philo->l_fork);
+	return (NULL);
+}
+
+int	routines(t_philo **p_array, pthread_t *monitor, int i)
 {
 	t_shared	*data;
-	pthread_t	monitor;
-	int			i;
-	int			k;
 
 	data = p_array[0]->data;
-	i = 0;
-	k = 0;
+	if (data->n_philo == 1)
+	{
+		pthread_create(&p_array[i]->thread_id, NULL, solo_routine, p_array[i]);
+		return (pthread_join(*monitor, NULL), 0);
+	}
 	while (i < data->n_philo)
 	{
 		if (pthread_create(&p_array[i]->thread_id, NULL, philo_routine,
 				p_array[i]) != 0)
-			return (born2die(p_array, i));
+		{
+			pthread_mutex_lock(&data->stop_flag);
+			data->must_stop = 1;
+			return (pthread_mutex_unlock(&data->stop_flag), born2die(p_array,
+					i));
+		}
 		i++;
 	}
-	if (pthread_create(&monitor, NULL, monitor_routine, p_array) != 0)
+	if (pthread_create(monitor, NULL, monitor_routine, p_array) != 0)
 		return (born2die(p_array, i));
-	while (k < data->n_philo)
-	{
-		pthread_join(p_array[k]->thread_id, NULL);
-		k++;
-	}
-	pthread_join(monitor, NULL);
-	return (0);
+	join_philos(p_array, data);
+	return (pthread_join(*monitor, NULL), 0);
 }

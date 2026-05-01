@@ -68,12 +68,14 @@ int	dead_or_full(t_philo *philo, int *full_philos)
 	pthread_mutex_lock(&philo->protect_meal);
 	present = get_mstime();
 	if ((present - philo->timestamp) > philo->data->ttd)
-		return (set_stop_flag(philo));
+		return (pthread_mutex_unlock(&philo->protect_meal),
+			set_stop_flag(philo));
 	if (philo->meal_count == philo->data->eat_cycle)
 	{
 		*full_philos += 1;
 		if (*full_philos == philo->data->n_philo)
-			return (set_stop_flag(philo));
+			return (pthread_mutex_unlock(&philo->protect_meal),
+				set_stop_flag(philo));
 	}
 	pthread_mutex_unlock(&philo->protect_meal);
 	return (0);

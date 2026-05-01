@@ -27,9 +27,9 @@ int	print_state(t_philo *philo_p, int i)
 {
 	long int	elapsed_time;
 
-	if (stop_flag_check(philo_p) == 1 && i != 0)
-		return (1);
 	pthread_mutex_lock(&philo_p->data->print);
+	if (stop_flag_check(philo_p) == 1 && i != DIES)
+		return (pthread_mutex_unlock(&philo_p->data->print), 1);
 	elapsed_time = get_mstime() - philo_p->data->start_time;
 	if (i == FORKS)
 		printf("%li %i has taken a fork\n", elapsed_time, philo_p->philo_id);

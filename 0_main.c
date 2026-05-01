@@ -96,7 +96,7 @@ int	main(int argc, char **argv)
 	if (philo_init(&data, p_array, forks))
 		return (dismantling(&data, p_array, forks), 0);
 	if (just1_philo(&data) == 1)
-		return (0);
+		return (dismantling(&data, p_array, forks), 0);
 	routines(p_array);
 	dismantling(&data, p_array, forks);
 	return (0);

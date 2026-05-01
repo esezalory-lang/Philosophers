@@ -75,7 +75,8 @@ int	dead_or_full(t_philo *philo, int *full_philos)
 	if ((present - philo->timestamp) > philo->data->ttd)
 		return (pthread_mutex_unlock(&philo->protect_meal),
 			set_stop_flag(philo));
-	if (philo->meal_count >= philo->data->eat_cycle)
+	if (philo->meal_count >= philo->data->eat_cycle
+		&& (philo->data->eat_cycle != -1))
 	{
 		*full_philos += 1;
 		if (*full_philos == philo->data->n_philo)

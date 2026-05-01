@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/05/01 15:35:28 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/01 15:48:13 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,20 @@ void	*solo_routine(void *philo_p)
 	if (print_state(philo, FORKS) == 1)
 		return (NULL);
 	usleep(philo->data->ttd * 1000);
+	if (print_state(philo, DIES) == 1)
+		return (NULL);
 	pthread_mutex_unlock(philo->l_fork);
 	return (NULL);
 }
 
-int	routines(t_philo **p_array, pthread_t *monitor, int i)
+int	routines(t_philo **p_array, pthread_t *monitor, t_shared *data, int i)
 {
-	t_shared	*data;
-
-	data = p_array[0]->data;
 	if (data->n_philo == 1)
 	{
-		pthread_create(&p_array[i]->thread_id, NULL, solo_routine, p_array[i]);
-		return (pthread_join(*monitor, NULL), 0);
+		if (pthread_create(&p_array[i]->thread_id, NULL, solo_routine,
+				p_array[i]) != 0)
+			return (0);
+		return (pthread_join(p_array[i]->thread_id, NULL), 0);
 	}
 	while (i < data->n_philo)
 	{

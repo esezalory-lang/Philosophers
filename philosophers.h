@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:23:29 by esezalor          #+#    #+#             */
-/*   Updated: 2026/05/01 15:37:20 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/01 15:48:48 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int					philo_init(t_shared *data, t_philo **p_array,
 						pthread_mutex_t *forks);
 
 // 2. Routines
-int					routines(t_philo **p_array, pthread_t *monitor, int i);
+int					routines(t_philo **p_array, pthread_t *monitor,
+						t_shared *data, int i);
 void				*solo_routine(void *philo_p);
 void				*philo_routine(void *philo_p);
 void				*monitor_routine(void *philo_array);

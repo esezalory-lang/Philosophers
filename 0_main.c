@@ -6,12 +6,11 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:14:38 by esezalor          #+#    #+#             */
-/*   Updated: 2026/05/01 15:36:51 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/01 15:48:54 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-#include <bits/pthreadtypes.h>
 
 // Shared Constant:
 // - number_of_philosophers
@@ -26,22 +25,6 @@
 // - philo_id
 // - number of times it must eat
 // - timestamp
-
-static int	just1_philo(t_shared *data)
-{
-	long int	elapsed_time;
-
-	elapsed_time = get_mstime() - data->start_time;
-	if (data->n_philo == 1)
-	{
-		printf("%li 0 has taken a fork\n", elapsed_time);
-		usleep(data->ttd * 1000);
-		elapsed_time = get_mstime() - data->start_time;
-		printf("%li 0 died\n", elapsed_time);
-		return (1);
-	}
-	return (0);
-}
 
 static int	argument_handling(int argc, char **argv)
 {
@@ -97,9 +80,7 @@ int	main(int argc, char **argv)
 			printf("Init Failure\n"), 0);
 	if (philo_init(&data, p_array, forks))
 		return (dismantling(&data, p_array, forks), 0);
-	if (just1_philo(&data) == 1)
-		return (dismantling(&data, p_array, forks), 0);
-	routines(p_array, &monitor, 0);
+	routines(p_array, &monitor, &data, 0);
 	dismantling(&data, p_array, forks);
 	return (0);
 }

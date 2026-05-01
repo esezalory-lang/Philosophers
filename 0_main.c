@@ -34,7 +34,8 @@ static int	just1_philo(t_shared *data)
 	if (data->n_philo == 1)
 	{
 		printf("%li 0 has taken a fork\n", elapsed_time);
-		usleep(data->ttd);
+		usleep(data->ttd * 1000);
+		elapsed_time = get_mstime() - data->start_time;
 		printf("%li 0 died\n", elapsed_time);
 		return (1);
 	}

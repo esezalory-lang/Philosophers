@@ -51,6 +51,8 @@ void	*philo_routine(void *philo_p)
 			return (NULL);
 		if (print_state(philo, SLEEPS) == 1)
 			return (NULL);
+		if (stop_flag_check(philo) == 1)
+			return (NULL);
 		usleep(philo->data->tts * 1000);
 		if (print_state(philo, THINKS) == 1)
 			return (NULL);

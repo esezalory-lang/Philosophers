@@ -24,6 +24,12 @@ int	mahlzeit(t_philo *philo_p)
 		pthread_mutex_unlock(philo_p->l_fork);
 		return (1);
 	}
+	if (stop_flag_check(philo_p) == 1)
+	{
+		pthread_mutex_unlock(philo_p->r_fork);
+		pthread_mutex_unlock(philo_p->l_fork);
+		return (1);
+	}
 	usleep(philo_p->data->tte * 1000);
 	if (stop_flag_check(philo_p) == 1)
 	{
@@ -31,9 +37,8 @@ int	mahlzeit(t_philo *philo_p)
 		pthread_mutex_unlock(philo_p->l_fork);
 		return (1);
 	}
-	pthread_mutex_unlock(philo_p->r_fork);
-	pthread_mutex_unlock(philo_p->l_fork);
-	return (0);
+	return (pthread_mutex_unlock(philo_p->r_fork),
+		pthread_mutex_unlock(philo_p->l_fork), 0);
 }
 
 int	taking_forks(t_philo *philo_p)
@@ -70,7 +75,7 @@ int	dead_or_full(t_philo *philo, int *full_philos)
 	if ((present - philo->timestamp) > philo->data->ttd)
 		return (pthread_mutex_unlock(&philo->protect_meal),
 			set_stop_flag(philo));
-	if (philo->meal_count == philo->data->eat_cycle)
+	if (philo->meal_count >= philo->data->eat_cycle)
 	{
 		*full_philos += 1;
 		if (*full_philos == philo->data->n_philo)

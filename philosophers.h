@@ -17,7 +17,7 @@
 # define EATS 2
 # define SLEEPS 3
 # define THINKS 4
-# define DIES 0
+# define DIES 5
 
 # include <limits.h>
 # include <pthread.h>

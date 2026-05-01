@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/05/01 15:48:13 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/01 17:08:46 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	*philo_routine(void *philo_p)
 	return (NULL);
 }
 
-void	*solo_routine(void *philo_p)
+void	*solo_philo(void *philo_p)
 {
 	t_philo	*philo;
 
@@ -91,7 +91,7 @@ int	routines(t_philo **p_array, pthread_t *monitor, t_shared *data, int i)
 {
 	if (data->n_philo == 1)
 	{
-		if (pthread_create(&p_array[i]->thread_id, NULL, solo_routine,
+		if (pthread_create(&p_array[i]->thread_id, NULL, solo_philo,
 				p_array[i]) != 0)
 			return (0);
 		return (pthread_join(p_array[i]->thread_id, NULL), 0);
@@ -100,16 +100,10 @@ int	routines(t_philo **p_array, pthread_t *monitor, t_shared *data, int i)
 	{
 		if (pthread_create(&p_array[i]->thread_id, NULL, philo_routine,
 				p_array[i]) != 0)
-		{
-			pthread_mutex_lock(&data->stop_flag);
-			data->must_stop = 1;
-			return (pthread_mutex_unlock(&data->stop_flag), born2die(p_array,
-					i));
-		}
+			return (set_stop_flag(data), born2die(p_array, i));
 		i++;
 	}
 	if (pthread_create(monitor, NULL, monitor_routine, p_array) != 0)
-		return (born2die(p_array, i));
-	join_philos(p_array, data);
-	return (pthread_join(*monitor, NULL), 0);
+		return (set_stop_flag(data), born2die(p_array, i));
+	return (join_philos(p_array, data), pthread_join(*monitor, NULL), 0);
 }

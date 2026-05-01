@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 18:54:23 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/01 17:03:51 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,21 @@ int	dead_or_full(t_philo *philo, int *full_philos)
 	pthread_mutex_lock(&philo->protect_meal);
 	present = get_mstime();
 	if ((present - philo->timestamp) > philo->data->ttd)
-		return (pthread_mutex_unlock(&philo->protect_meal),
-			set_stop_flag(philo));
+	{
+		pthread_mutex_unlock(&philo->protect_meal);
+		set_stop_flag(philo->data);
+		return (print_state(philo, DIES), 1);
+	}
 	if (philo->meal_count >= philo->data->eat_cycle
 		&& (philo->data->eat_cycle != -1))
 	{
 		*full_philos += 1;
 		if (*full_philos == philo->data->n_philo)
-			return (pthread_mutex_unlock(&philo->protect_meal),
-				set_stop_flag(philo));
+		{
+			pthread_mutex_unlock(&philo->protect_meal);
+			set_stop_flag(philo->data);
+			return (print_state(philo, DIES), 1);
+		}
 	}
 	pthread_mutex_unlock(&philo->protect_meal);
 	return (0);

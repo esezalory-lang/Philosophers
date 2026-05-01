@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 10:55:19 by esezalor          #+#    #+#             */
-/*   Updated: 2026/04/30 18:55:21 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/01 17:11:53 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,9 @@ int	stop_flag_check(t_philo *philo_p)
 	return (0);
 }
 
-int	set_stop_flag(t_philo *philo)
+void	set_stop_flag(t_shared *data)
 {
-	pthread_mutex_lock(&philo->data->stop_flag);
-	philo->data->must_stop = 1;
-	pthread_mutex_unlock(&philo->data->stop_flag);
-	print_state(philo, DIES);
-	return (1);
+	pthread_mutex_lock(&data->stop_flag);
+	data->must_stop = 1;
+	pthread_mutex_unlock(&data->stop_flag);
 }

@@ -28,7 +28,7 @@ int	print_state(t_philo *philo_p, int i)
 	long int	elapsed_time;
 
 	if (stop_flag_check(philo_p) == 1 && i != 0)
-			return (1);
+		return (1);
 	pthread_mutex_lock(&philo_p->data->print);
 	elapsed_time = get_mstime() - philo_p->data->start_time;
 	if (i == FORKS)
@@ -42,7 +42,7 @@ int	print_state(t_philo *philo_p, int i)
 	else if (i == DIES)
 		printf("%li %i died\n", elapsed_time, philo_p->philo_id);
 	pthread_mutex_unlock(&philo_p->data->print);
-	return(0);
+	return (0);
 }
 
 int	stop_flag_check(t_philo *philo_p)

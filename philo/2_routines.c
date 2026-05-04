@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/05/01 17:08:46 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/04 10:29:20 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	*philo_routine(void *philo_p)
 	if (stop_flag_check(philo) == 1)
 		return (NULL);
 	if (philo->philo_id % 2 != 0)
-		usleep(100);
+		usleep(philo->data->tte);
 	while (stop_flag_check(philo) != 1)
 	{
 		if (taking_forks(philo) == 1 || mahlzeit(philo) == 1)
@@ -65,7 +65,7 @@ void	*philo_routine(void *philo_p)
 			return (NULL);
 		if (stop_flag_check(philo) == 1)
 			return (NULL);
-		usleep(philo->data->tts * 1000);
+		precise_sleep(philo, philo->data->tts);
 		if (print_state(philo, THINKS) == 1)
 			return (NULL);
 	}
@@ -80,7 +80,7 @@ void	*solo_philo(void *philo_p)
 	pthread_mutex_lock(philo->l_fork);
 	if (print_state(philo, FORKS) == 1)
 		return (NULL);
-	usleep(philo->data->ttd * 1000);
+	precise_sleep(philo, philo->data->ttd);
 	if (print_state(philo, DIES) == 1)
 		return (NULL);
 	pthread_mutex_unlock(philo->l_fork);

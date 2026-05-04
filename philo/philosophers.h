@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:23:29 by esezalor          #+#    #+#             */
-/*   Updated: 2026/05/01 17:09:47 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/04 10:32:16 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define SLEEPS 3
 # define THINKS 4
 # define DIES 5
+# define FULL 6
 
 # include <limits.h>
 # include <pthread.h>
@@ -80,6 +81,7 @@ int					born2die(t_philo **p_array, int n);
 
 // 4. Utils
 long int			get_mstime(void);
+void				precise_sleep(t_philo *philo, int ms);
 int					print_state(t_philo *philo_p, int i);
 int					stop_flag_check(t_philo *philo_p);
 void				set_stop_flag(t_shared *data);

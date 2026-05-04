@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/05/01 17:03:51 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/04 10:32:44 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	mahlzeit(t_philo *philo_p)
 		pthread_mutex_unlock(philo_p->l_fork);
 		return (1);
 	}
-	usleep(philo_p->data->tte * 1000);
+	precise_sleep(philo_p, philo_p->data->tte);
 	if (stop_flag_check(philo_p) == 1)
 	{
 		pthread_mutex_unlock(philo_p->r_fork);
@@ -69,26 +69,28 @@ int	taking_forks(t_philo *philo_p)
 int	dead_or_full(t_philo *philo, int *full_philos)
 {
 	long int	present;
+	long int	l_timestamp;
+	int			l_mcount;
 
-	pthread_mutex_lock(&philo->protect_meal);
 	present = get_mstime();
-	if ((present - philo->timestamp) > philo->data->ttd)
+	pthread_mutex_lock(&philo->protect_meal);
+	l_mcount = philo->meal_count;
+	l_timestamp = philo->timestamp;
+	pthread_mutex_unlock(&philo->protect_meal);
+	if ((present - l_timestamp) > philo->data->ttd)
 	{
-		pthread_mutex_unlock(&philo->protect_meal);
 		set_stop_flag(philo->data);
 		return (print_state(philo, DIES), 1);
 	}
-	if (philo->meal_count >= philo->data->eat_cycle
-		&& (philo->data->eat_cycle != -1))
+	if (l_mcount >= philo->data->eat_cycle && (philo->data->eat_cycle != -1))
 	{
 		*full_philos += 1;
 		if (*full_philos == philo->data->n_philo)
 		{
-			pthread_mutex_unlock(&philo->protect_meal);
 			set_stop_flag(philo->data);
-			return (print_state(philo, DIES), 1);
+			return (print_state(philo, FULL), 1);
 		}
 	}
-	pthread_mutex_unlock(&philo->protect_meal);
 	return (0);
 }
+

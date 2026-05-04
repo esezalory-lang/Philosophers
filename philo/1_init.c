@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:31 by esezalor          #+#    #+#             */
-/*   Updated: 2026/05/01 17:09:47 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/04 12:40:26 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ int	data_init(char **argv, t_shared *data)
 	data->start_time = get_mstime();
 	if (data->start_time == -1)
 		return (1);
-	pthread_mutex_init(&data->stop_flag, NULL);
-	pthread_mutex_init(&data->print, NULL);
+	if (pthread_mutex_init(&data->stop_flag, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&data->print, NULL) != 0)
+		return (1);
 	return (0);
 }
 

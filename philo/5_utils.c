@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 10:55:19 by esezalor          #+#    #+#             */
-/*   Updated: 2026/05/04 10:32:04 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/04 10:38:26 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	print_state(t_philo *philo_p, int i)
 	long int	elapsed_time;
 
 	pthread_mutex_lock(&philo_p->data->print);
-	if (stop_flag_check(philo_p) == 1 && (i != DIES || i != FULL))
+	if (stop_flag_check(philo_p) == 1 && i != DIES)
 		return (pthread_mutex_unlock(&philo_p->data->print), 1);
 	elapsed_time = get_mstime() - philo_p->data->start_time;
 	if (i == FORKS)
@@ -57,8 +57,6 @@ int	print_state(t_philo *philo_p, int i)
 		printf("%li %i is thinking\n", elapsed_time, philo_p->philo_id);
 	else if (i == DIES)
 		printf("%li %i died\n", elapsed_time, philo_p->philo_id);
-	else if (i == FULL)
-		printf("All philo full\n");
 	pthread_mutex_unlock(&philo_p->data->print);
 	return (0);
 }

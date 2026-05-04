@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:21:23 by esezalor          #+#    #+#             */
-/*   Updated: 2026/05/04 10:32:44 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/04 10:38:46 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,8 @@ int	dead_or_full(t_philo *philo, int *full_philos)
 		if (*full_philos == philo->data->n_philo)
 		{
 			set_stop_flag(philo->data);
-			return (print_state(philo, FULL), 1);
+			return (1);
 		}
 	}
 	return (0);
 }
-

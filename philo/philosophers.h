@@ -6,7 +6,7 @@
 /*   By: esezalor <esezalor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 18:23:29 by esezalor          #+#    #+#             */
-/*   Updated: 2026/05/04 10:32:16 by esezalor         ###   ########.fr       */
+/*   Updated: 2026/05/04 10:38:14 by esezalor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # define SLEEPS 3
 # define THINKS 4
 # define DIES 5
-# define FULL 6
 
 # include <limits.h>
 # include <pthread.h>

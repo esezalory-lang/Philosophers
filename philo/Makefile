@@ -26,11 +26,10 @@ $(NAME): $(OBJS)
 
 clean:
 	@rm -f $(OBJS) $(DEPS)
-	@echo Almost clean
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo Clean slate baby
+	@echo Clean slate
 
 re: fclean all
 
